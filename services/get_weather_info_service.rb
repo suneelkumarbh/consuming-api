@@ -1,0 +1,2 @@
+class GetWeatherInfoService
+end

@@ -1,1 +1,6 @@
-# api key = CUW26APQR6FL9U594J9NWQ3CN
+cities = [
+  'Copenhagen, Denmark',
+  'Lodz, Poland',
+  'Brussels, Belgium',
+  'Islamabad, Pakistan'
+]
