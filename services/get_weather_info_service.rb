@@ -4,7 +4,8 @@ require_relative '../errors/invalid_data'
 
 class GetWeatherInfoService
   BASE_URL = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline'.freeze
-  API_KEY = 'MWC4LLU3US34D3H6RC6B5WA65'.freeze # putting the key in the code is not a good practice, but I am keeping here just to avoid more configuration etc
+  API_KEY = 'ABZL6ZVRBML83QZR28F4B3EU9'.freeze # putting the key in the code is not a good practice, but I am keeping here just to avoid more configuration etc
+  COLUMN_WIDTH = 25
 
   attr_accessor :cities, :start_date, :end_date, :weather_info
 
@@ -40,8 +41,12 @@ class GetWeatherInfoService
   end
 
   def display_weather_info
-    @weather_info.each do |key, value|
-      puts "#{key}   #{value[:wind_avg].round(2)}  #{value[:wind_med].round(2)}  #{value[:temp_avg].round(2)}  #{value[:temp_med].round(2)}"
+    printf("%-#{COLUMN_WIDTH}s %-#{COLUMN_WIDTH}s %-#{COLUMN_WIDTH}s %-#{COLUMN_WIDTH}s %-#{COLUMN_WIDTH}s\n", 'City',
+           'Wind Avg', 'Wind Med', 'Temp Avg', 'Temp Med')
+    @weather_info.each do |city, weather|
+      printf(
+        "%-#{COLUMN_WIDTH}s %-#{COLUMN_WIDTH}.2f %-#{COLUMN_WIDTH}.2f %-#{COLUMN_WIDTH}.2f %-#{COLUMN_WIDTH}.2f\n", city, weather[:wind_avg], weather[:wind_med], weather[:temp_avg], weather[:temp_med]
+      )
     end
   end
 end
