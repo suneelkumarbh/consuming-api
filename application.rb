@@ -9,6 +9,7 @@ cities = [
 ]
 
 # On the free account, I am able to retrieve the weather records for a single city only once
+# If you dont get results on above cities array then use this, and replace 30 on line 17 with 4 or 6
 # cities = [
 #   'Islamabad, Pakistan'
 # ]
