@@ -18,3 +18,4 @@ end_date = Date.today.strftime('%Y-%m-%d')
 
 cities_weather_info = GetWeatherInfoService.new(cities, start_date, end_date)
 cities_weather_info.get_weather_data
+cities_weather_info.display_weather_info
