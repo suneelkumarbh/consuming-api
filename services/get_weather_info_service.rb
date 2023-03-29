@@ -1,5 +1,4 @@
 require 'httparty'
-require 'byebug'
 require_relative '../errors/invalid_data'
 
 class GetWeatherInfoService
@@ -16,17 +15,11 @@ class GetWeatherInfoService
     @weather_info = {}
   end
 
-  def get_weather_data
-    raise InvalidData, 'Invalid cities data' unless cities&.all? { |city| city != '' }
+  def set_weather_info
+    raise InvalidData, 'Invalid cities data' unless cities&.all? { |city| city != '' } && !cities.empty?
 
     cities.each do |city|
-      url = "#{BASE_URL}/#{city.delete(' ')}/#{start_date}/#{end_date}?key=#{API_KEY}"
-      response = HTTParty.get(url)
-
-      raise InvalidData, response.body unless response.code == 200
-
-      data = JSON.parse(response.body)
-
+      data = call_weather_api(city)
       temps = data['days'].map { |day| day['temp'] }
       winds = data['days'].map { |day| day['windspeed'] }
 
@@ -48,5 +41,16 @@ class GetWeatherInfoService
         "%-#{COLUMN_WIDTH}s %-#{COLUMN_WIDTH}.2f %-#{COLUMN_WIDTH}.2f %-#{COLUMN_WIDTH}.2f %-#{COLUMN_WIDTH}.2f\n", city, weather[:wind_avg], weather[:wind_med], weather[:temp_avg], weather[:temp_med]
       )
     end
+  end
+
+  private
+
+  def call_weather_api(city)
+    url = "#{BASE_URL}/#{city.delete(' ')}/#{start_date}/#{end_date}?key=#{API_KEY}"
+    response = HTTParty.get(url)
+
+    raise InvalidData, response.body unless response.code == 200
+
+    JSON.parse(response.body)
   end
 end
