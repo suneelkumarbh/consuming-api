@@ -1,6 +1,14 @@
+require_relative 'services/get_weather_info_service'
+require 'date'
+
 cities = [
   'Copenhagen, Denmark',
   'Lodz, Poland',
   'Brussels, Belgium',
   'Islamabad, Pakistan'
 ]
+
+start_date = (Date.today - 30).strftime('%Y-%m-%d')
+end_date = Date.today.strftime('%Y-%m-%d')
+
+cities_weather_info = GetWeatherInfoService.new(cities, start_date, end_date)
